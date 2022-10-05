@@ -3,12 +3,13 @@ package com.epam.mjc.io;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 public class FileReader {
-
+    Logger logger = Logger.getLogger(FileReader.class.getName());
     public Profile getDataFromFile(File file) {
-        //FileInputStream fileInputStream = null;
         String fileContent = "";
         try(FileInputStream fileInputStream = new FileInputStream(file);)
         {
@@ -20,14 +21,11 @@ public class FileReader {
 
         } catch (IOException ex)
         {
-            System.out.println(ex);
+            logger.log(Level.INFO, ex.toString());
+
         }
-        System.out.println(fileContent);
         String parts[] = fileContent.split("\\s+");
-        System.out.println(parts[1]);
-        System.out.println(parts[3]);
-        System.out.println(parts[5]);
-        System.out.println(parts[7]);
+
         return new Profile(parts[1], Integer.parseInt(parts[3]), parts[5], Long.parseLong(parts[7]) );
 
     }
