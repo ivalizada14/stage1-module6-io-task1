@@ -10,21 +10,23 @@ import java.util.logging.Logger;
 public class FileReader {
     Logger logger = Logger.getLogger(FileReader.class.getName());
     public Profile getDataFromFile(File file) {
-        String fileContent = "";
+        StringBuilder bld = new StringBuilder();
+
         try(FileInputStream fileInputStream = new FileInputStream(file);)
         {
             int i = 0;
             while((i=fileInputStream.read())!=-1)
             {
-                fileContent += (char) (i);
+                bld.append ((char) (i));
             }
 
         } catch (IOException ex)
         {
             logger.log(Level.INFO, ex.toString());
-
         }
-        String parts[] = fileContent.split("\\s+");
+        String fileContent = bld.toString();
+
+        String[] parts = fileContent.split("\\s+");
 
         return new Profile(parts[1], Integer.parseInt(parts[3]), parts[5], Long.parseLong(parts[7]) );
 
